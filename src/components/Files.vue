@@ -1,7 +1,11 @@
 <template>
     <button @click="upload">Upload</button>
     <div id="card-container">
-        <div v-for="info, id in data.files" class="card-outer">
+        <div
+            class="card-outer"
+            v-for="info, id in data.files"
+            :key="id"
+        >
             <span @click="updateName(id)">{{ info.name }}</span>
             <Card
                 :info="info"
