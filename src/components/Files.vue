@@ -1,3 +1,44 @@
+<template>
+  <button @click="uploadNew">Upload New</button>
+  <div id="card-container">
+    <div
+      class="card"
+      v-for="{ downloadUrl, type }, id in data.files"
+      draggable="true"
+      @dragstart="setDragData($event, id)"
+    >
+      <img
+        v-if="type && type.startsWith('image')"
+        draggable="false"
+        :src="downloadUrl"
+      />
+
+      <video controls v-else-if="type && type.startsWith('video')">
+        <source :src="downloadUrl" :type="type">
+          Your browser does not support the video element.
+      </video>
+
+      <audio controls   v-else-if="type && type.startsWith('audio')">
+        <source :src="downloadUrl" :type="type">
+        Your browser does not support the audio element.
+      </audio>
+
+      <div
+        class="card-remove-button"
+        @click="removeFile(id)"
+      >
+        &#x274C;
+      </div>
+      <div
+        class="card-copy-button"
+        @click="copyToClipboard(id)"
+      >
+        &#x2398;
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { reactive } from 'vue'
 
@@ -11,8 +52,9 @@ Agent
     Object
       .keys(state)
       .forEach(async id => {
-        data.files[id] = { downloadUrl: null }
+        data.files[id] = { downloadUrl: null, type: null }
         data.files[id].downloadUrl = await Agent.download(id).url()
+        data.files[id].type = (await Agent.metadata(id)).active_type
       })
     data.uploadedFiles = state
   })
@@ -48,36 +90,7 @@ function copyToClipboard(text) {
 
 </script>
 
-<template>
-  <button @click="uploadNew">Upload New</button>
-  <div id="card-container">
-    <div
-      class="card"
-      v-for="{ downloadUrl }, id in data.files"
-      draggable="true"
-      @dragstart="setDragData($event, id)"
-    >
-      <img
-        draggable="false"
-        :src="downloadUrl"
-      />
-      <div
-        class="card-remove-button"
-        @click="removeFile(id)"
-      >
-        &#x274C;
-      </div>
-      <div
-        class="card-copy-button"
-        @click="copyToClipboard(id)"
-      >
-        &#x2398;
-      </div>
 
-      
-    </div>
-  </div>
-</template>
 
 <style scoped>
   #card-container
@@ -129,5 +142,9 @@ function copyToClipboard(text) {
   .card-copy-button:hover
   {
     opacity: 1;
+  }
+  video {
+    width: 160px;
+    height: 120px;
   }
 </style>
