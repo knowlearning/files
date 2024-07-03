@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@knowlearning/agents": "^0.9.60",
+    "@knowlearning/agents": "^0.9.152",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
     "vue": "^3.3.11"
   },

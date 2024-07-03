@@ -1,9 +1,9 @@
-import { browserAgent } from '@knowlearning/agents'
+import Agent from '@knowlearning/agents'
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 
-window.Agent = browserAgent()
+window.Agent = Agent
 
 const { auth: { provider }} = await Agent.environment()
 

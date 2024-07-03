@@ -1,5 +1,5 @@
 <template>
-    <button @click="uploadNew">Upload New</button>
+    <button @click="upload">Upload</button>
     <div id="card-container">
         <div v-for="info, id in data.files" class="card-outer">
             <span>{{ info.name }}</span>
@@ -15,6 +15,7 @@
 <script setup>
 import Card from './Card.vue'
 import { reactive } from 'vue'
+import validate from '../helpers/validateUpload.js'
 
 const data = reactive({
     files: {}
@@ -32,8 +33,9 @@ Agent
             })
     })
 
-async function uploadNew() {
-    const id = await Agent.upload({ browser: true })
+async function upload() {
+    const id = await Agent.upload({ browser: true, validate })
+    if (!id) alert('file not uploaded, likely too large')
     if (id) {
         const url = await Agent.download(id).url()
         const { active_type, name } = await Agent.metadata(id)

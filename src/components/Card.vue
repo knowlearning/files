@@ -10,13 +10,20 @@
             :src="info.url"
         />
 
-        <video controls v-else-if="info.type && info.type.startsWith('video')">
-            <source :src="info.url" :type="info.type">
-                Your browser does not support the video element.
+        <video
+            v-else-if="info.type && info.type.startsWith('video')"
+            :src="info.url"
+            controls
+            allowfullscreen
+        >
+            Your browser does not support the video element.
         </video>
 
-        <audio controls   v-else-if="info.type && info.type.startsWith('audio')">
-            <source :src="info.url" :type="info.type">
+        <audio
+            v-else-if="info.type && info.type.startsWith('audio')"
+            :src="info.url"
+            controls
+        >
             Your browser does not support the audio element.
         </audio>
 
