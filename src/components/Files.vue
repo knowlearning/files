@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 
 const data = reactive({
   files: {}
@@ -46,7 +46,6 @@ function copyToClipboard(text) {
     document.body.removeChild(textarea);
 }
 
-const count = ref(0)
 </script>
 
 <template>

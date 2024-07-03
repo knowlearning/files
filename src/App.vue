@@ -1,10 +1,21 @@
+<template>
+  <AccessPage
+    v-if="!access"
+    @access="access = true"
+  />
+  <Files v-else/>
+</template>
+
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import AccessPage from './components/AccessPage.vue'
+import Files from './components/Files.vue'
+
+const access = ref(false)
+
 </script>
 
-<template>
-  <HelloWorld msg="Vite + Vue" />
-</template>
+
 
 <style scoped>
 .logo {
