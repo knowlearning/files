@@ -58,34 +58,27 @@ function copyToClipboard(text) {
 </script>
 
 <style scoped>
-.card
-{
+.card {
     position: relative;
     background: #f9f9f9;
     width: 200px;
-    height: 120px;
-    margin: 16px;
+    height: 150px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     align-items: center;
     justify-content: center;
     border-radius: 4px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-.card:hover
-{
+.card:hover {
     cursor: grab;
 }
-.card>img
-{
+.card>img {
     max-width: 90%;
     max-height: 90%;
 }
 .card-remove-button,
-.card-copy-button
-{
-    opacity: 0.1;
+.card-copy-button {
     position: absolute;
     bottom: 4px;
     cursor: pointer;
@@ -100,13 +93,14 @@ function copyToClipboard(text) {
     font-size: 2rem;
 }
 .card-remove-button:hover,
-.card-copy-button:hover
-{
+.card-copy-button:hover {
     opacity: 1;
 }
 video {
     width: 200px;
     height: 150px;
 }
-audio { width: 200px; }
+audio {
+    width: 200px;
+}
 </style>

@@ -1,12 +1,14 @@
 <template>
     <button @click="uploadNew">Upload New</button>
     <div id="card-container">
-        <Card
-            v-for="info, id in data.files"
-            :info="info"
-            :id="id"
-            @remove="removeFile"
-        />
+        <div v-for="info, id in data.files" class="card-outer">
+            <span>{{ info.name }}</span>
+            <Card
+                :info="info"
+                :id="id"
+                @remove="removeFile"
+            />
+        </div>
     </div>
 </template>
 
@@ -52,5 +54,16 @@ function removeFile(id) {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+.card-outer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 12px;
+}
+.card-outer span {
+    font-size: 0.8rem;
+    margin-bottom: 2px;
 }
 </style>
