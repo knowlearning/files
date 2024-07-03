@@ -5,4 +5,7 @@ import App from './App.vue'
 
 window.Agent = browserAgent()
 
-createApp(App).mount('#app')
+const { auth: { provider }} = await Agent.environment()
+
+if (provider === 'anonymous') Agent.login()
+else createApp(App).mount('#app')
