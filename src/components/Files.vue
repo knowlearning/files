@@ -1,5 +1,5 @@
 <template>
-    <button @click="upload">Upload</button>
+    <button @click.exact="upload" @click.shift.exact="addUsersFiles">Upload</button>
     <div id="card-container">
         <div
             class="card-outer"
@@ -25,7 +25,7 @@ const data = reactive({
     files: {}
 })
 
-Agent
+const existingFilesLoaded = Agent
     .state('uploaded-files')
     .then(state => {
         Object
@@ -49,6 +49,26 @@ async function upload() {
 
     }
     else console.log('No file selected....')
+}
+
+async function addUsersFiles() {
+    const userId = prompt('Enter User Id to Add References to their Files')?.trim() 
+    if (!userId) return
+
+    const items = await Agent.state(
+        'uploaded-files',
+        userId,
+        'kl-files.netlify.app' // for localhost
+    )
+    const idsToAdd = Object.keys(items)
+    await existingFilesLoaded // doesn't call, verifies initial load complete
+    await Promise.all(Object.keys(items).map(async id => {
+        const url = await Agent.download(id).url()
+        const { active_type, name } = await Agent.metadata(id)
+
+        data.uploadedFiles[id] ??= {}
+        data.files[id] = { url, name, type: active_type }
+    }))
 }
 
 async function updateName(id) {
